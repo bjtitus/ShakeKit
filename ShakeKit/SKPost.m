@@ -10,6 +10,7 @@
 #import "SKUser.h"
 #import "NSDate+DateConversion.h"
 
+static NSString * const kSharekey = @"sharekey";
 static NSString * const kPostTitle = @"title";
 static NSString * const kPostName = @"name";
 static NSString * const kPostDescription = @"description";
@@ -19,9 +20,12 @@ static NSString * const kPostOriginalImageURL = @"original_image_url";
 static NSString * const kPostHeight = @"height";
 static NSString * const kPostWidth = @"width";
 static NSString * const kPostViews = @"views";
+static NSString * const kLiked = @"liked";
+static NSString * const kSaved = @"saved";
 
 @implementation SKPost
 
+@synthesize sharekey;
 @synthesize title;
 @synthesize fileName;
 @synthesize fileDescription;
@@ -32,11 +36,14 @@ static NSString * const kPostViews = @"views";
 @synthesize height;
 @synthesize width;
 @synthesize views;
+@synthesize liked;
+@synthesize saved;
 
 - (id)initWithDictionary:(NSDictionary *)theDictionary
 {
   if ((self = [super init]))
   {
+    sharekey = [[theDictionary objectForKey:kSharekey] copy];
     title = [[theDictionary objectForKey:kPostTitle] copy];
     fileName = [[theDictionary objectForKey:kPostName] copy];
     fileDescription = [[theDictionary objectForKey:kPostDescription] copy];      
@@ -47,6 +54,8 @@ static NSString * const kPostViews = @"views";
     height = [[theDictionary valueForKey:kPostHeight] integerValue];
     width = [[theDictionary valueForKey:kPostWidth] integerValue];
     views = [[theDictionary valueForKey:kPostViews] integerValue];
+    liked = [[theDictionary valueForKey:kLiked] boolValue];
+    saved = [[theDictionary valueForKey:kSaved] boolValue];
   }
   
   return self;

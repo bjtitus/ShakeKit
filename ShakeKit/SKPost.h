@@ -12,6 +12,7 @@
 
 @interface SKPost : NSObject 
 
+@property (copy) NSString *sharekey;
 @property (copy) NSString *title;
 @property (copy) NSString *fileName;
 @property (copy) NSString *fileDescription;
@@ -22,6 +23,8 @@
 @property (assign) NSInteger height;
 @property (assign) NSInteger width;
 @property (assign) NSInteger views;
+@property (assign) BOOL liked;
+@property (assign) BOOL saved;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 

@@ -11,6 +11,8 @@
 @class ASIHTTPRequest;
 @class SKShake;
 @class SKUser;
+@class SKPost;
+@class SKComment;
 
 typedef void (^SKCompletionHandler)(id response, NSError *error);
 
@@ -94,6 +96,11 @@ typedef void (^SKCompletionHandler)(id response, NSError *error);
 - (void)loadProfileForCurrentlyAuthenticatedUserWithCompletionHandler:(SKCompletionHandler)handler;
 
 /**
+ Returns the shared files for a given shake
+*/
+- (void)loadSharedFilesForShake:(SKShake *)shake completionHandler:(SKCompletionHandler)handler;
+
+/**
  Returns the shakes the currently authenticated user can post to
 */
 - (void)loadShakesWithCompletionHandler:(SKCompletionHandler)handler;
@@ -104,5 +111,23 @@ typedef void (^SKCompletionHandler)(id response, NSError *error);
 */
 - (void)uploadFileFromLocalPath:(NSURL *)localPath toShake:(SKShake *)shake withCompletionHandler:(SKCompletionHandler)handler;
 
+- (void)loadCommentsForPost:(SKPost *)post completionHandler:(SKCompletionHandler)handler;
+
+#pragma mark - Action methods
+
+/**
+ POST a shared item like
+*/
+- (void)likePost:(SKPost *)post completionHandler:(SKCompletionHandler)handler;
+
+/**
+ POST a shared item save
+ */
+- (void)savePost:(SKPost *)post completionHandler:(SKCompletionHandler)handler;
+
+/**
+ POST a comment to a shared item
+*/
+- (void)postComment:(SKComment *)comment toPost:(SKPost *)post completionHandler:(SKCompletionHandler)handler;
 
 @end

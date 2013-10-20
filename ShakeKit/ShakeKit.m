@@ -18,6 +18,7 @@
 #import "SKPost.h"
 #import "SKUser.h"
 #import "SKShake.h"
+#import "SKComment.h"
 
 @interface ShakeKit ()
 - (ASIHTTPRequest *)requestWithProtocol:(NSString *)protocol host:(NSString *)host path:(NSString *)path parameters:(NSDictionary *)params method:(NSString *)method;
@@ -183,6 +184,12 @@
   [self loadObjectOfClass:[SKUser class] path:path completionHandler:handler];
 }
 
+- (void)loadSharedFilesForShake:(SKShake *)shake completionHandler:(SKCompletionHandler)handler
+{
+    NSString *path = [NSString stringWithFormat:@"/shakes/%i", shake.shakeID];
+    [self loadArrayOfClass:[SKPost class] key:@"shake_shared" path:path completionHandler:handler];
+}
+
 - (void)loadShakesWithCompletionHandler:(SKCompletionHandler)handler
 {
   NSString *path = @"/shakes";
@@ -310,6 +317,25 @@
   [self.queue addOperation:request];
 }
 
+- (void)postAndLoadObjectOfClass:(Class)aClass path:(NSString *)path completionHandler:(SKCompletionHandler)handler
+{
+    __block ASIHTTPRequest *request = [self requestWithProtocol:kSKProtocolHTTPS host:kSKMlkShkAPIHost path:path parameters:nil method:kSKMethodPOST];
+    
+    [request setCompletionBlock:^{
+        NSDictionary *responseDictionary = [[request responseString] objectFromJSONString];
+        id obj = [[aClass alloc] initWithDictionary:responseDictionary];
+        
+        handler([obj autorelease], nil);
+    }];
+    
+    [request setFailedBlock:^{
+        NSError *error = request.error;
+        handler(nil, error);
+    }];
+    
+    [self.queue addOperation:request];
+}
+
 - (void)loadArrayOfClass:(Class)aClass key:(NSString *)key path:(NSString *)path completionHandler:(SKCompletionHandler)handler
 {
   __block ASIHTTPRequest *request = [self requestWithProtocol:kSKProtocolHTTPS host:kSKMlkShkAPIHost path:path parameters:nil method:kSKMethodGET];
@@ -334,5 +360,33 @@
   
   [self.queue addOperation:request];
 }
+
+- (void)loadCommentsForPost:(SKPost *)post completionHandler:(SKCompletionHandler)handler
+{
+    NSString *path = [NSString stringWithFormat:@"/sharedfile/%@/comments", post.sharekey];
+    [self loadArrayOfClass:[SKComment class] key:@"comments" path:path completionHandler:handler];
+}
+
+#pragma mark - Action Methods
+
+- (void)likePost:(SKPost *)post completionHandler:(SKCompletionHandler)handler
+{
+    NSString *path = [NSString stringWithFormat:@"/sharedfile/%@/like", post.sharekey];
+    [self postAndLoadObjectOfClass:[SKPost class] path:path completionHandler:handler];
+}
+
+- (void)savePost:(SKPost *)post completionHandler:(SKCompletionHandler)handler
+{
+    NSString *path = [NSString stringWithFormat:@"/sharedfile/%@/save", post.sharekey];
+    [self postAndLoadObjectOfClass:[SKPost class] path:path completionHandler:handler];
+}
+
+- (void)postComment:(SKComment *)comment toPost:(SKPost *)post completionHandler:(SKCompletionHandler)handler
+{
+    //TODO: More work to do here
+    NSString *path = [NSString stringWithFormat:@"/sharedfile/%@/save", post.sharekey];
+    [self postAndLoadObjectOfClass:[SKPost class] path:path completionHandler:handler];
+}
+
 
 @end
