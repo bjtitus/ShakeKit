@@ -23,6 +23,9 @@
 @property (assign) NSInteger height;
 @property (assign) NSInteger width;
 @property (assign) NSInteger views;
+@property (assign) NSInteger numLikes;
+@property (assign) NSInteger numSaves;
+@property (assign) NSInteger numComments;
 @property (assign) BOOL liked;
 @property (assign) BOOL saved;
 

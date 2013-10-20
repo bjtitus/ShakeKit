@@ -20,6 +20,9 @@ static NSString * const kPostOriginalImageURL = @"original_image_url";
 static NSString * const kPostHeight = @"height";
 static NSString * const kPostWidth = @"width";
 static NSString * const kPostViews = @"views";
+static NSString * const kPostLikes = @"likes";
+static NSString * const kPostSaves = @"saves";
+static NSString * const kPostComments = @"comments";
 static NSString * const kLiked = @"liked";
 static NSString * const kSaved = @"saved";
 
@@ -36,6 +39,9 @@ static NSString * const kSaved = @"saved";
 @synthesize height;
 @synthesize width;
 @synthesize views;
+@synthesize numLikes;
+@synthesize numSaves;
+@synthesize numComments;
 @synthesize liked;
 @synthesize saved;
 
@@ -54,6 +60,10 @@ static NSString * const kSaved = @"saved";
     height = [[theDictionary valueForKey:kPostHeight] integerValue];
     width = [[theDictionary valueForKey:kPostWidth] integerValue];
     views = [[theDictionary valueForKey:kPostViews] integerValue];
+    numLikes = [[theDictionary valueForKey:kPostLikes] integerValue];
+    numSaves = [[theDictionary valueForKey:kPostSaves] integerValue];
+    numComments = [[theDictionary valueForKey:kPostComments] integerValue];
+
     liked = [[theDictionary valueForKey:kLiked] boolValue];
     saved = [[theDictionary valueForKey:kSaved] boolValue];
   }
