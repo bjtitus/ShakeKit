@@ -71,6 +71,11 @@ typedef void (^SKCompletionHandler)(id response, NSError *error);
 - (void)loadMagicFilesWithCompletionHandler:(SKCompletionHandler)handler;
 
 /**
+ Returns incoming files
+ */
+- (void)loadIncomingFilesWithCompletionHandler:(SKCompletionHandler)handler;
+
+/**
  Returned the shared file with the given share key (e.g., GJ1)
 */
 - (void)loadSharedFileWithKey:(NSString *)key completionHandler:(SKCompletionHandler)handler;

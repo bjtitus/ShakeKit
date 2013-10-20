@@ -155,6 +155,12 @@
   [self loadArrayOfClass:[SKPost class] key:@"magicfiles" path:path completionHandler:handler];
 }
 
+- (void)loadIncomingFilesWithCompletionHandler:(SKCompletionHandler)handler
+{
+    NSString *path = @"/incoming";
+    [self loadArrayOfClass:[SKPost class] key:@"incoming" path:path completionHandler:handler];
+}
+
 - (void)loadSharedFileWithKey:(NSString *)theKey completionHandler:(SKCompletionHandler)handler
 {
   NSString *path = [NSString stringWithFormat:@"/sharedfile/%@", theKey];
