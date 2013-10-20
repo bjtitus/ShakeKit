@@ -193,7 +193,7 @@
 - (void)loadSharedFilesForShake:(SKShake *)shake completionHandler:(SKCompletionHandler)handler
 {
     NSString *path = [NSString stringWithFormat:@"/shakes/%i", shake.shakeID];
-    [self loadArrayOfClass:[SKPost class] key:@"shake_shared" path:path completionHandler:handler];
+    [self loadArrayOfClass:[SKPost class] key:@"sharedfiles" path:path completionHandler:handler];
 }
 
 - (void)loadShakesWithCompletionHandler:(SKCompletionHandler)handler
